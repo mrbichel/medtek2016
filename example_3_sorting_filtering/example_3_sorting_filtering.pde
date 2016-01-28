@@ -5,9 +5,6 @@
 import de.bezier.data.sql.*;
 SQLite db;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 // lad os laveet array af text som vi kan gemme twets i og vise dem på skærmen
 // vi gemmer vores tweets sp vi ikke skal hente dem fra databasen hver eneste frame vi vil tegne dem
 // det tager relativt lang tid at hente data ud af databasen, men når vi først har det i vores lokale 

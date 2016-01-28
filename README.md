@@ -1,8 +1,6 @@
 # medtek2016
 Political data visualization with twitter and processing curriculum and examples for course on media and technology at Roskilde University. February 2016.
 
-
-
 MedTek 2016 
 
 - Basal SQL
@@ -19,13 +17,9 @@ MedTek 2016
 - netværksanalyse 
 - hvad bliver der linket til 
 
-text analysis
-- 
-
 sammenhold med ft.dk statistik evt. 
 
 overvej om de skal forholde sig til live data overhovedet.
-
 
 Database 
 stw index på 1 ord
@@ -49,7 +43,6 @@ brug materiale til flere kurser
 
 Designopgave, – analyse og eksperiment med udgangspunkt i kursets emner – data fra sociale medier – kreativ bearbejdning af disse fx • let forståelige fremstillinger eller • abstrakte ”kunstneriske” fortolkninger
 
----
 Guide til twitter: 
 Gå til dev.twitter.com
 Login med bruger og password, opret en konto hvis du ikke har en 
@@ -136,42 +129,21 @@ caps lock
 
 /usr/local/Cellar/mysql/5.6.27/bin/mysql_install_db --verbose --user=johan --basedir=/usr/local/Cellar/mysql/5.6.27 --datadir=/usr/local/var/mysql --tmpdir=/tmp
 
-
 Skema 
-MEDTEK
 Scheduled: 18 Feb 2016 09:30 to 15:30
-
-MEDTEK
 Scheduled: 22 Feb 2016 09:30 to 15:30 kan ikke
-
-MEDTEK
 Scheduled: 25 Feb 2016 09:30 to 15:30 kan ikke
-
-MEDTEK
 Scheduled: 29 Feb 2016 09:30 to 12:30 kan ikke
-
-MEDTEK
 Scheduled: 03 Mar 2016 09:30 to 15:30 kan ikke
-
-MEDTEK
 Scheduled: 07 Mar 2016 09:30 to 15:30 kan ikke 
-
-MEDTEK
 Scheduled: 10 Mar 2016 09:30 to 12:30 kan ikke
 
-
 live data excersise 
-
 fetch and draw
-
 hent og tegn 
-
 Streaming API
 and collected data
-
-#cop21
-
-
+cop21
 hashtags virker ikke rigtigt
 
 http://codigogenerativo.com/code/twitter-para-processing-2-0/
@@ -198,8 +170,6 @@ mysql> USE medtekpol16;
 mysql> \. /Users/johan/Documents/medtek2016/Dump20160120.sql
 
 
-
-
 Sorterer alle retweets fra 
 
 
@@ -220,9 +190,7 @@ To eksempel rækker
 - dynamisk visualisering  
 
 
-
 almindelige processing eksempelr er fine til at lære og tegne 
-
 
 --------
 For examples
@@ -236,16 +204,28 @@ class Tweet {
 }
 
 
-
 ----
     
     // For at finde ud af hvad der interessant at visualiserer er det en god idé
     // at lave mange forskellige queries for at få en idé om hvordan dataen ser ud
     // og hvilke mønstre man måske kan finde
 
+---
+
+	// LIKE keyword - explorer example
+
+	// trend over time example 
+
+	// n-gram example
+
+	// haiku
+
+	// netwrok diagram using RT
 
 
+look up full politician name from username ft database 
 
+http://www.tutorialspoint.com/sqlite/sqlite_like_clause.htm
 
 
 

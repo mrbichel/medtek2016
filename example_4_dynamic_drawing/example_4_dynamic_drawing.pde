@@ -1,28 +1,136 @@
-// Eksempel 4
+// Eksempel 4 - LIKE - søgemaskine
+// I dette ekesempel ser vi hvordan vi med SQL kan sortere på mønstre i data
 
 import de.bezier.data.sql.*;
 SQLite db;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+// I dette eksempel har vi brug for lidt flere informationer om hvert tweet når vi tegner det
+// så vi samler det i en klasse
+class Tweet {
+  String tweet;
+  String[] words;
+}
 
-void setup() {
-  db = new SQLite( this, "../data/st.db" );
+String lastsearchword;
+String selectedWord;
 
-  if ( db.connect() ) {
+ArrayList<Tweet> tweets;
+
+// Vi flytter vores query til en funktion, så vi kan kalde den dynamisk når programmet kører
+void searchWord(String _keyword) {
+  
+   lastsearchword = _keyword;
+  
+   
+    // I SQL bruger vi keywordet like til at finde resultater der matcher et bestemt mønster
+    // Det kan fx være et eller flere ord der indgår i et tweet 
+    // eller vi kan finde alle brugere der starter med et bestemt bogstav
     
-    String Q = "select time, text from st";
+    // Lad os bygge en lille søgemaskine til at finde tweets der har ord tilfælles
+    
+    // TODO: forklar struktur af like clause ...
+    
+    String Q = "select text from st where text like '%" + _keyword + "%' order by text limit 50" ;
 
     db.query(Q);
-
+    
+    tweets.clear();
+    
     while (db.next ()) {
-
-      String tweet = db.getString("text");
-      int time = db.getInt("time");
-
+      
+      String tweetString = db.getString("text").toLowerCase();
+      
+      tweetString = tweetString.replace('\n', ' ');
+      
+      Tweet tweet = new Tweet();
+      // split the tweet into words
+      tweet.tweet = tweetString;
+      tweet.words = splitTokens(tweetString, ",.!? \"'()");
+      
+      tweets.add(tweet);
+      
+      println(tweet.words);
+      
     }
+  
+}
+
+void setup() {
+  tweets = new ArrayList<Tweet>();
+  size( 1000, 600 );
+  db = new SQLite( this, "../data/st.db" );
+  
+  if ( db.connect() ) {
+    searchWord("arbejde");
   }
+  
+}
+
+
+void draw() {
+  background(0);
+
+  float lineHeight = 30;
+  float yOffset = 30;
+  
+  
+  selectedWord = "";
+  
+  
+  for(int i=0; i<tweets.size(); i++) {
+    
+ 
+    float centerKeywordX = -textWidth(split(tweets.get(i).tweet, lastsearchword)[0]) + width/2 - textWidth(lastsearchword)/2;
+    
+    fill(255,255,255,190);
+    textSize(24);
+    
+    text(tweets.get(i).tweet, centerKeywordX, yOffset);
+    
+    for(int wi=0; wi<tweets.get(i).words.length; wi++) {
+      
+      String w = tweets.get(i).words[wi];
+      float wordWidth = textWidth(w);
+      
+      String[] beforeAfter = split(tweets.get(i).tweet, w);
+      float xOffset = centerKeywordX + textWidth(beforeAfter[0]); // Denne linje virker ikke korrekt hvis ordet forekomemr mere end 1. gang i et tweet
+      
+      
+      // Highlight the word the mouse is over
+      if(mouseX > xOffset-2 &&
+         mouseX < xOffset+wordWidth+2 && 
+         mouseY > yOffset-(lineHeight*0.85) && 
+         mouseY < yOffset+(lineHeight*0.1) ) {
+        
+          selectedWord = w;
+          fill(255,0,0);
+          text(w, xOffset, yOffset);
+          
+      }
+      
+      //xOffset += wordWidth;
+    }
+    
+    yOffset += lineHeight;
+    
+    
+  }
+  
+  
+  
+}
+
+
+void mousePressed() {
+   
+  if(selectedWord != "") {
+    searchWord(selectedWord);
+  }
+  
+  
 }
 
 
 
+// Øvelser
+// 1. Ændrer programmet så det søger på en kombination af flere ord
