@@ -49,11 +49,6 @@ brug materiale til flere kurser
 
 Designopgave, – analyse og eksperiment med udgangspunkt i kursets emner – data fra sociale medier – kreativ bearbejdning af disse fx • let forståelige fremstillinger eller • abstrakte ”kunstneriske” fortolkninger
 
-- 238 - faktura + 30% (timer)
-- timesats 205 - 
-
-timer uvist max 90
-
 ---
 Guide til twitter: 
 Gå til dev.twitter.com
