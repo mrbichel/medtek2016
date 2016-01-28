@@ -21,7 +21,7 @@ int wiLimit = 1;
 void setup() {
   size( 800, 600 );
   colorMode(HSB);
-  db = new SQLite( this, "st.db" );  // open database file
+  db = new SQLite( this, "..data/st.db" );  // open database file
   reload(uge,parti);
 }
 void draw() {
@@ -36,6 +36,7 @@ void draw() {
     synligt+=max(0,x[i]);
     text(word[i], x[i], y[i]);
     x[i]-=speedx[i];
+
     if (y[i]<yBorder || y[i]>=height) speedy[i]=speedy[i]*(-1);
     y[i]+=speedy[i];
   }

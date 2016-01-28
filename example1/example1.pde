@@ -27,10 +27,6 @@ import de.bezier.data.sql.*;
 // SQLite database
 SQLite db;
 
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 // I setup funktionen ligger kode der bliver kørt én gang når programmet starter
 void setup() {
   
@@ -75,31 +71,17 @@ void setup() {
        String tweet = db.getString("text");
        
        // Gem tidspunkt twitter beskeden er lagt ud
-       
        int time = db.getInt("time");
-       
-       // Tidspunktet er et unix timestamp
-       // Det er en simpel måde at regne tid på hvor alle tidspunkter
-       // er defineret som det antal sekunder der er gået siden 1. Jan 1970 (UTC) 
-       // man bruger ofte unix timestamp til at repræsenterer tidspunkter når man programmere
-       // da det er meget simplere at bruge et enkelt tal til fx. at sortere en database efter dato
-       // end det er at bruge vores system i år, måneder, dage, timer, minutter og sekunder hvor ingen af 
-       // delelementerne går op i 10 
        
        // Lad os skrive ud for hvert tweet indholdet af beskeden og hvornår det er postet 
        // println skriver tekst til panelet nederst i processing vinduet
        println("Tidspunkt: " + time + ", Tweet: " + tweet );
-         
-                // Øvelser:
        
+       //______________________________________
+       
+       // Øvelser:
        // 1. prøv at skrive ud hvem der har skrevet twitter beskeden, ligger i kolonnen user
        
-       // 2. prøv at skrive tidspunkterne i et andet format, år, måned, dag, time, minut fx.
-       // hint, søg på 
-       Date pdate = new Date();
-       pdate = new SimpleDateFormat("ddMMMyy:HH:mm").parse(time);
-       
-       println(pdate);
          
         
      }

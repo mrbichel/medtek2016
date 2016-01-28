@@ -8,12 +8,14 @@ String parti = "DF";
 String overskrift;
 int lastKeyFrame=-10;
 int yBorder=70;
+
 void setup() {
   size( 800, 600 );
   colorMode(HSB);
-  db = new SQLite( this, "st.db" );  // open database file
+  db = new SQLite( this, "../data/st.db" );  // open database file
   reload(uge,parti);
 }
+
 void draw() {
   background(200);
   fill(#151DE5);
@@ -29,7 +31,7 @@ void draw() {
   }
 }
 
-void reload(int uge,String parti){
+void reload(int uge, String parti){
   sttext =  new String[0];
   col = new color[0];
   speedx = new float[0];

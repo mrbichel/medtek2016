@@ -174,6 +174,10 @@ hent og tegn
 Streaming API
 and collected data
 
+#cop21
+
+
+hashtags virker ikke rigtigt
 
 http://codigogenerativo.com/code/twitter-para-processing-2-0/
 
@@ -194,8 +198,56 @@ myysql.server start
 
 mysql -uroot
 
-=> CREATE DATABASE medtekpol16
-=>  USE medtekpol16;
+mysql> CREATE DATABASE medtekpol16
+mysql> USE medtekpol16;
+mysql> \. /Users/johan/Documents/medtek2016/Dump20160120.sql
+
+
+
+
+Sorterer alle retweets fra 
+
+
+To eksempel rækker
+
+## SQL, getting the data
+- forbind, unix timestamp, basale database termer 
+- vælge data
+- sortere data
+- join
+
+## Tekst analyse
+- n-grams
+- 
+
+## Drawing, showing the data
+- gemme i datatype til draw, undgå at spørge databasen hver frame
+- dynamisk visualisering  
+
+
+
+almindelige processing eksempelr er fine til at lære og tegne 
+
+
+--------
+For examples
+
+// Lad os lave en klasse tweet til at gemme tweets så vi nemt kan visualisere dem lokalt
+// Vores klasse indeholder de samme felter som vi har i databasen
+class Tweet {
+  String parti;
+  String tweet;
+  
+}
+
+
+
+----
+    
+    // For at finde ud af hvad der interessant at visualiserer er det en god idé
+    // at lave mange forskellige queries for at få en idé om hvordan dataen ser ud
+    // og hvilke mønstre man måske kan finde
+
 
 
 
