@@ -2,8 +2,7 @@
 Political data visualization with twitter and processing curriculum and examples for course on media and technology at Roskilde University. February 2016.
 
 
-
-MedTek 2016 
+# Unsorted notes:
 
 - Basal SQL
 - Fokus på forskellige former for data visualisering
@@ -12,9 +11,8 @@ MedTek 2016
 - abstrakt visualisering
 - visualisering over tid
 - dataforståelse / statistik
-- dårlige til matematik og statistik
 - eksempler på måder at sorterer ting
-- adgang til metadata, billeder
+- adgang til metadata, billeder ?
 
 - netværksanalyse 
 - hvad bliver der linket til 
@@ -48,11 +46,6 @@ sqlite lokalt
 brug materiale til flere kurser
 
 Designopgave, – analyse og eksperiment med udgangspunkt i kursets emner – data fra sociale medier – kreativ bearbejdning af disse fx • let forståelige fremstillinger eller • abstrakte ”kunstneriske” fortolkninger
-
-- 238 - faktura + 30% (timer)
-- timesats 205 - 
-
-timer uvist max 90
 
 ---
 Guide til twitter: 
