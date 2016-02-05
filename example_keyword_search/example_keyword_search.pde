@@ -20,7 +20,6 @@ ArrayList<Tweet> tweets;
 void searchWord(String _keyword) {
   
    lastsearchword = _keyword;
-  
    
     // I SQL bruger vi keywordet like til at finde resultater der matcher et bestemt mønster
     // Det kan fx være et eller flere ord der indgår i et tweet 
@@ -73,12 +72,9 @@ void draw() {
   float lineHeight = 30;
   float yOffset = 30;
   
-  
   selectedWord = "";
   
-  
   for(int i=0; i<tweets.size(); i++) {
-    
  
     float centerKeywordX = -textWidth(split(tweets.get(i).tweet, lastsearchword)[0]) + width/2 - textWidth(lastsearchword)/2;
     
@@ -95,7 +91,6 @@ void draw() {
       String[] beforeAfter = split(tweets.get(i).tweet, w);
       float xOffset = centerKeywordX + textWidth(beforeAfter[0]); // Denne linje virker ikke korrekt hvis ordet forekomemr mere end 1. gang i et tweet
       
-      
       // Highlight the word the mouse is over
       if(mouseX > xOffset-2 &&
          mouseX < xOffset+wordWidth+2 && 
@@ -105,31 +100,19 @@ void draw() {
           selectedWord = w;
           fill(255,0,0);
           text(w, xOffset, yOffset);
-          
-      }
-      
+      } 
       //xOffset += wordWidth;
     }
     
     yOffset += lineHeight;
-    
-    
   }
-  
-  
-  
 }
-
 
 void mousePressed() {
-   
   if(selectedWord != "") {
     searchWord(selectedWord);
-  }
-  
-  
+  }  
 }
-
 
 
 // Øvelser

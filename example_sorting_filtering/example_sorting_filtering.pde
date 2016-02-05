@@ -15,11 +15,11 @@ String[] tweetStrings;
 float offsetX, offsetY;
 
 void setup() {
-  // Vi skal initialiserer vores array før vi kan bruge det
-  tweetStrings = new String[0];
-  
   // size definerer vores vindues størrelse
   size( 800, 600 );
+  
+  // Vi skal initialiserer vores array før vi kan bruge det
+  tweetStrings = new String[0];
   
   db = new SQLite( this, "../data/st.db" );
 
@@ -65,8 +65,6 @@ void draw() {
   for(int i=0; i<tweetStrings.length; i++) {
     text(tweetStrings[i], 20 +offsetX , offsetY + 20 + i * 30);
   }
-  
-  
   
 }
 

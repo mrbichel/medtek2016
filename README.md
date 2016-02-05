@@ -1,8 +1,10 @@
 # medtek2016
 Political data visualization with twitter and processing curriculum and examples for course on media and technology at Roskilde University. February 2016.
 
-MedTek 2016 
+lots of nice examples: http://flowingdata.com/
+intro to data viz for lynda course: https://www.youtube.com/watch?v=T5lRLA_Vn7o
 
+MedTek 2016
 - Basal SQL
 - Fokus på forskellige former for data visualisering
 - guide til opsætning af twitter API key 
@@ -195,38 +197,57 @@ almindelige processing eksempelr er fine til at lære og tegne
 --------
 For examples
 
-// Lad os lave en klasse tweet til at gemme tweets så vi nemt kan visualisere dem lokalt
+// Lad os lave en k
+lasse tweet til at gemme tweets så vi nemt kan visualisere dem lokalt
 // Vores klasse indeholder de samme felter som vi har i databasen
 class Tweet {
   String parti;
   String tweet;
-  
 }
 
-
 ----
-    
     // For at finde ud af hvad der interessant at visualiserer er det en god idé
     // at lave mange forskellige queries for at få en idé om hvordan dataen ser ud
     // og hvilke mønstre man måske kan finde
-
 ---
 
 	// LIKE keyword - explorer example
-
 	// trend over time example 
-
 	// n-gram example
-
 	// haiku
-
 	// netwrok diagram using RT
-
 
 look up full politician name from username ft database 
 
 http://www.tutorialspoint.com/sqlite/sqlite_like_clause.htm
 
+http://wordcram.org/ example
+viz libraries - super powers - black box
 
+Twitter handle primary key i politiker tabel
+brug natural join
+
+count 
+group by 
+desc 
+asc
+
+visualisering vigtigere end SQL
+
+interpolere
+
+// konsol
+----
+1 time inspiration til data visualisering
+
+efter frokost
+
+spring sql over
+vis dataviz projekter
+retninger for kurset 
+
+fortæl en historie
+
+- netværks diagram blackbox
 
 
