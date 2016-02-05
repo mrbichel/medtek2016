@@ -30,6 +30,7 @@ int user1_tweetCountCurrent;
 
 void setup() {
 
+  //initialise variables.
   user1_timestamps = new int[0];
   user1_tweetCountTotal = 0;
   user1_tweetCountCurrent = 0;
