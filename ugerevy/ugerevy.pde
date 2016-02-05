@@ -21,7 +21,7 @@ int wiLimit = 1;
 void setup() {
   size( 800, 600 );
   colorMode(HSB);
-  db = new SQLite( this, "..data/st.db" );  // open database file
+  db = new SQLite( this, "../data/st.db" );  // open database file
   reload(uge,parti);
 }
 void draw() {
