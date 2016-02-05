@@ -20,6 +20,8 @@ int screen_y = 600;
 //int graph_x = 600;
 //int graph_y = 500;
 
+//full array of the time stamps from the query
+//we're looking to populate this and then map/scale it the appropriate axis
 int[] user1_timestamps;
 int user1_firstTime;
 int user1_lastTime;
