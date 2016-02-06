@@ -29,10 +29,6 @@ int offset_y = (screen_y - graph_y) / 2;
 //full array of the time stamps from the query
 //we're looking to populate this and then map/scale it the appropriate axis
 int[] user1_timestamps;
-int user1_firstTime;
-int user1_lastTime;
-int user1_tweetCountTotal;
-int user1_tweetCountCurrent;
 
 
 void drawAxis(){   //should be named drawAxes which is the proper plural of Axis, but that's a bit much...
@@ -53,8 +49,6 @@ void drawAxis(){   //should be named drawAxes which is the proper plural of Axis
 void setup() {
 
   user1_timestamps = new int[0];
-  user1_tweetCountTotal = 0;
-  user1_tweetCountCurrent = 0;
   
   // size definerer vores vindues størrelse
   size( screen_x, screen_y );
@@ -67,14 +61,11 @@ void setup() {
     while (db.next () ) {
       int time = db.getInt("time");
       user1_timestamps = append(user1_timestamps, time);
-      user1_tweetCountTotal++;      
-      Date date = new Date ((long) time * 1000);
+      //Date date = new Date ((long) time * 1000);
       println("time:" + time);
     }
   }
   
-  user1_firstTime = user1_timestamps[0];
-  user1_lastTime = user1_timestamps[user1_timestamps.length - 1];
   
 }
 
@@ -92,11 +83,16 @@ void draw() {
   beginShape();
   //map graph width
   
-
-  user1_tweetCountCurrent = 0;  
-  //for each time stamp in the timestamp array
+  //init variables for the loop below, and to make things a bit more readable
+  int user1_tweetCountCurrent = 0;  
+  int user1_tweetCountTotal = user1_timestamps.length;
+int user1_firstTime = user1_timestamps[0];  
+  //get the last time stamp in the timestamps array
+  int user1_lastTime = user1_timestamps[user1_timestamps.length - 1];
+  
+  //for each time stamp in the timestamps array
   for (int i=0; i < user1_timestamps.length ; i++){
-    //map the current
+    //map the current timestamp
     int timeValue = user1_timestamps[i];
     
     //float vertex_x = map(timeValue, user1_firstTime, user1_lastTime, 0, width);
