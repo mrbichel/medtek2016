@@ -20,6 +20,7 @@ int graph_y = 500;
 //presume it's centered for now
 int offset_x = (screen_x - graph_x) / 2;
 int offset_y = (screen_y - graph_y) / 2;
+float usernamesWidth;
 
 //the real values as bounds of the graph
 int startTime;
@@ -113,24 +114,37 @@ void draw() {
   
   drawAxis();
   
-  
   noFill();
   strokeWeight(5.0);
   strokeJoin(ROUND);
-  
+    
   User userFocus = userList.get(0); 
-
   startTime = userFocus.timestamps[0];  
   //get the last time stamp in the timestamps array
   endTime = userFocus.timestamps[userFocus.timestamps.length - 1];
   tweetCountTotal = userFocus.timestamps.length;
 
+  textSize(20);
+  usernamesWidth = 0.0;
+
+  
+  
   stroke(0,0,255);
   drawPopularity(userList.get(0));
+  fill(0,0,255);
+  writeUsername(userList.get(0).name);
+
+  noFill();
   stroke(255,0,0);
   drawPopularity(userList.get(1));
+  fill(255,0,0);
+  writeUsername(userList.get(1).name);
+
+  noFill();
   stroke(0,255,0);
-  drawPopularity(userList.get(2));
+  drawPopularity(userList.get(2));  
+  fill(0,255,0);
+  writeUsername(userList.get(2).name);
 }
 
 
@@ -165,11 +179,21 @@ void drawPopularity(User user){
       tweetCountCurrent++;
     }else{
       //out of time range, so can do nothing, or exit the loop early
+      break;
     }
+    
+    if(tweetCountCurrent > tweetCountTotal){
+      break;
+    }   
+    
   } 
   endShape();
-
 } 
 
+void writeUsername(String name){   
+  String username = "@" + name + " ";
+  text(username, offset_x + usernamesWidth, offset_y + graph_y + offset_y/2);
+  usernamesWidth += textWidth(username); 
+}
 
 
