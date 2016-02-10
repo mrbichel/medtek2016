@@ -7,40 +7,52 @@ import java.util.Date;
 SQLite db;
 
 
-
+// can be nice to define global variables at the top of the program
+// this way if we need to make quick changes to things that we might expect we might need, in this case screen width
+// we can quickly change it. 
+// what we want to do through the rest of the program is also make sure that we only reference the variables by name,
+// instead of inserting a "hard coded" value later. That is, we don't want be using the bare number "800" else where in the program
+// because if we need to make the change later, then we'd have to go and look through the code. Which sucks.
 int screen_x = 800;
 int screen_y = 600;
 
-//Allow the graph to be smaller than the screen, so we have space to add post count and dates
-//presume graph is centered aligned
+// Similarly, we define other static graph width/height values here.
+// Allow the graph to be smaller than the screen, so we have space to add post count and dates
+// We currently define the graph is centered aligned, and the code below reflects this. if we changed the code below
+// to allow different offsets, then we'd also want to change this comment to describe something else. Again, for ease of future changes.
 int graph_x = 600;
 int graph_y = 500;
 
-//The offset is how much space/padding we have between the edge of the screen and the graph
-//presume it's centered for now
+//The offset is how much space/padding we have between the edge of the screen 
+//and the graph, which is centered for now
 int offset_x = (screen_x - graph_x) / 2;
 int offset_y = (screen_y - graph_y) / 2;
-float usernamesWidth;
 
-//the real values as bounds of the graph
+//the real values as bounds of the graph. That is, the un-mapped/un-scaled time values.
 int startTime;
 int endTime;
 int tweetCountTotal;
 
-void drawAxis(){   //should be named drawAxes which is the proper plural of Axis, but that's a bit much...
-  
+//this variable helps us track our current x-coordinate whilst writing usernames
+float usernamesWidth;
+
+
+
+// Draw the Axes of the graph.
+// Should be named drawAxes which is the proper plural of Axis, 
+// pronounced how one might expect axis pluralised would sound,
+// not like a pair of axes for chopping. But that's some pretty obscure English...
+void drawAxis(){    
   //set the line color. Greyscale number from 0 (black) to 255 (white)
   stroke(0);
-  //set the line thickness / weight
+  //set the line thickness / weight. Play with this to find different looks. Can be a float.
   strokeWeight(2);
   
   //draw the y axis. starting form the top left down to bottom left.
   line(offset_x, offset_y, offset_x, offset_y + graph_y);
   //draw the x axis. starting from the last point bottom left, to bottom right
-  line(offset_x, offset_y + graph_y, offset_x + graph_x, offset_y + graph_y);
-     
+  line(offset_x, offset_y + graph_y, offset_x + graph_x, offset_y + graph_y);    
 }
-
 
 
 
@@ -49,17 +61,47 @@ void drawAxis(){   //should be named drawAxes which is the proper plural of Axis
 // so they are easier to organise, pull information from, and keep the data from before so we're not
 // constaintly making new big SQL data calls.
 
-// so, whenever we make a new user, we populate it with data from the DB and then store the user in 
+// We also create a class so that the information belonging to each User is "held together" or related strongly
+// in each. That is, Name, timestaps and tweetcountTotal will all then be contained in a single User object.
+// Another way of hold this data is in seperate arrays, but then we have to be more careful when referencing/pulling 
+// the information out of each different data structure...
+
+// So, whenever we make a new user, we populate it with data from the DB and then store the user in 
 // the ArrayList of User objects
+
+// This first line defines the next code block to be about a new object class, that is named 'User'
 class User {
-  //User name that we're searching for
+  //We now define the list of properties that give our new User object it's "User-ness"
+  //First thing a User has is a name 
   String name;
-  //full array of the time stamps from the query
-  //we're looking to populate this and then map/scale it the appropriate axis
+  //Second thing a User has is a bunch of tweets that occured at a certain time.
+  //For our graph, we only need to know the time a post was made, not the content/text of the post.
+  //So for this sketch, we only need an array of ordered timestamps of tweets, not the tweets themselves.
+  //full array of the time stamps from the db query
   int[] timestamps;
+
+  //Third property is more for convenience. We could calculated the total number of tweets each time by looking at timestamp.legth()
+  //But it's also nice and clear in later code to call the the tweetCountTotal directly.
   int tweetCountTotal; 
   
-  //class constructor
+  // we could also include more properties for the User, such as a display color, or the array of tweets etc etc.
+  // but for now, let's just stick to the timestamps
+  
+  
+  
+  //Class constructor
+  //Once we've defined an Object by stating a bunch of properties, was can then define how a new object is to be actually
+  //created at runtime. 
+  //The simplest way would be to create a User object with default values;
+
+  User(){
+    name = "";
+    timestamps = new int[0];
+    tweetCountTotal = 0;
+  }
+  
+  
+  
   //called when we create new User object
   User(String tempName){
     
@@ -127,8 +169,6 @@ void draw() {
   textSize(20);
   usernamesWidth = 0.0;
 
-  
-  
   stroke(0,0,255);
   drawPopularity(userList.get(0));
   fill(0,0,255);
