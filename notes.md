@@ -221,7 +221,17 @@ look up full politician name from username ft database
 
 http://www.tutorialspoint.com/sqlite/sqlite_like_clause.htm
 
+
+tidslinjer
+
+http://politik.tv2.dk/valg2015/2015-06-09-faa-valgets-hoejdepunkter-serveret-paa-et-oejeblik
+
+http://filip.journet.sdu.dk/twitterpolitikere/grafer.php
+
 http://wordcram.org/ example
+
+http://shahmirj.com/blog/extracting-twitter-usertags-using-regex
+
 viz libraries - super powers - black box
 
 Twitter handle primary key i politiker tabel
