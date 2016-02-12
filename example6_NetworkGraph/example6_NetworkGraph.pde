@@ -104,18 +104,12 @@ void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
  //lets have 3 levels of strength/closeness, from weakest to strongest, i.e. ascending
  retweets.sortValues();
  
- //create an array of "weak" connections
- String[] weakUsers = new String[0];    // 3-5 posts
- int weakUsersLower = 1;
- int weakUsersUpper = 5;
- 
- String[] mediumUsers = new String[0]; // 
- int mediumUserLower = 6;
+ //create arrays based on strength of user connections. Set the numbers for now.
+ String[] weakUsers = new String[0];    // 1-5 posts
+ int weakUsersUpper = 5; 
+ String[] mediumUsers = new String[0]; // 6-25 post
  int mediumUsersUpper = 25;
-
- String[] strongUsers = new String[0]; // 10-25 posts
- int strongUsersLower = 26;
- int strongUsersUpper = 100000;
+ String[] strongUsers = new String[0]; // >25 posts
  
  String[] retweetUsers = retweets.keyArray();
  for(int i = 0; i < retweetUsers.length; i++){
@@ -125,19 +119,23 @@ void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
      weakUsers = append(weakUsers, retweetUsers[i]);
    }else if(strength <= mediumUsersUpper){
      mediumUsers = append(mediumUsers,retweetUsers[i]);
-   }else if(strength <= strongUsersUpper){
+   }else if(strength > mediumUsersUpper){
      strongUsers = append(strongUsers, retweetUsers[i]);
    }else{
      //
    }     
  }//end for loop
-  print("weakUsers:");
-  println(weakUsers);
-  print("medUsers:");
-  println(mediumUsers);
-  print("strongUsers:");
-  println(strongUsers);
-
- //maximum radius would be the height of the screen minus textHeight
 }
 
+
+
+void display(String userCurrent, HashMap<String,IntDict> networkGraph){
+  
+  //display the userCurrent in the center.
+  
+ //maximum radius would be the height of the screen minus textHeight
+ //find the big circle around the weak users and divide the arcs from there
+ 
+ 
+ 
+}
