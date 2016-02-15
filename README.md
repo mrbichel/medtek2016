@@ -34,3 +34,9 @@ Hent libraries. Links (brug dims)
 
 7. Netværksdiagram
 	
+
+
+## Bonus evt. 
+twitter4j - find live data
+
+
