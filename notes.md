@@ -261,3 +261,32 @@ fortæl en historie
 - netværks diagram blackbox
 
 
+
+
+## Noter fra møde: 
+
+
+## st3.db med users 
+## kl 17:00
+
+## Torsdag 
+## - 
+
+## Nicolas oplæg 30 min helt simpel programming 
+## SQL db connect 
+## + 1 eksempel - øvelse med profil billeder
+
+## forskellige datatyper, arrays, arrayList, 
+
+## Jeg starter med keyword search 
+
+## 
+## 
+## 
+
+## Simpel pædagigisk 
+
+##  
+
+
+

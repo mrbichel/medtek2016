@@ -70,7 +70,7 @@ void draw() {
 
 // Øvelser
 // 1. sorter tweets efter hvilke politikere der har skrevet dem
-// 2. 
+// 2. Prøv at vælge politikernes billede og sæt ind før deres tweet
 
 
 

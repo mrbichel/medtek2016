@@ -15,14 +15,13 @@ Eksempler giver en kort introduktion til SQL og forskellige eksempler på visual
 	- [WordCram (v0.6.2)](http://wordcram.org/2015/08/02/wordcram-0-6-2-released.html)
 	- [Twitter4j (v4.0.4)](https://github.com/yusuke/twitter4j/releases/tag/4.0.4)
 
-	Du kan også tilføje libaries via menuen i Processing `Sketch -> Import library -> Add library`
+	Du kan også tilføje libaries via menuen i Processing `Sketch -> Import library -> Add library
 
 4. Hent database og læg i data mappen
 	- [st.db]()
 
 5. Du kan også springe trin 2, 3, 4 over og hente det hele samlet 
 	- Link til github release, zip fil med hele processing sketchbook mappen, libraries og database
-
 
 
 1. Introduktion til SQL
