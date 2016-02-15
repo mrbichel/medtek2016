@@ -1,11 +1,29 @@
-Overblik over eksempler
+# medtek2016
+
+Eksempler til kursus på medier og teknologi Roskilde Universitet 2016. Data visualisering af politkeres tweets op til folketingsvalget i 2015.
+Eksempler giver en kort introduktion til SQL og forskellige eksempler på visualisering af data med processing2.
 
 
-Kom i gang. 
-Installer eksempler
-Processing2 link 
+## Kom i gang
 
-Hent libraries. Links (brug dims)
+1. Hent [Processing2 (v2.2.1)](https://processing.org/download/?processing)
+
+2. Download det her repository og læg i det i din Processing sketchbook mappe, `~/Documents/Processing` som default.
+
+3. Download nødvendige libriaries
+	- [BezierSQLib](http://bezier.de/processing/libs/sql/) 
+	- [WordCram (v0.6.2)](http://wordcram.org/2015/08/02/wordcram-0-6-2-released.html)
+	- [Twitter4j (v4.0.4)](https://github.com/yusuke/twitter4j/releases/tag/4.0.4)
+
+	Du kan også tilføje libaries via menuen i Processing `Sketch -> Import library -> Add library`
+
+4. Hent database og læg i data mappen
+	- [st.db]()
+
+5. Du kan også springe trin 2, 3, 4 over og hente det hele samlet 
+	- Link til github release, zip fil med hele processing sketchbook mappen, libraries og database
+
+
 
 1. Introduktion til SQL
 	
