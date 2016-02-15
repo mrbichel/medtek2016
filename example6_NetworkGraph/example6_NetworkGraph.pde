@@ -154,6 +154,7 @@ void display(String userCurrent, HashMap<String,IntDict> networkGraph){
   //find the big circle around the weak users and divide the arcs from there  
 
   float angle = 0;
+  //50 pix padding from the screen edge.
   float radius = height/2 - 50;
 
   
