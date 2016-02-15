@@ -1,8 +1,31 @@
 import de.bezier.data.sql.*;
 SQLite db;
-String[] sttext;
-color[] col;
-float[] x,y,speedx,speedy;
+class Tweet {
+  String tweet;
+  String sttext;
+  color col;
+  float x,y,speedx,speedy;
+  Tweet(String text){
+      sttext = text;
+      x = 0.5*width+random(max(width,tweets.size()*width/3));
+      y = yBorder+random(height-yBorder);
+      speedx = random(1,3);
+      speedy = random(-0.3,0.3);
+      col = color(random(360),80,99);
+  }
+  void display() {
+    fill(col);
+    text(sttext, x, y);
+  }
+  void move() {
+    x-=speedx;
+    if (y<=yBorder || y>=height) speedy=speedy*(-1);
+    y+=speedy;
+  }
+}
+
+ArrayList<Tweet> tweets;
+
 int uge = 3;
 String parti = "DF";
 String overskrift;
@@ -10,6 +33,7 @@ int lastKeyFrame=-10;
 int yBorder=70;
 
 void setup() {
+  tweets = new ArrayList<Tweet>();
   size( 800, 600 );
   colorMode(HSB);
   db = new SQLite( this, "../data/st.db" );  // open database file
@@ -22,22 +46,14 @@ void draw() {
   textSize(48);
   text(overskrift,200,50);
   textSize(16);
-  for (int i=0; i<sttext.length; i++) {
-    fill(col[i]);
-    text(sttext[i], x[i], y[i]);
-    x[i]-=speedx[i];
-    if (y[i]<=yBorder || y[i]>=height) speedy[i]=speedy[i]*(-1);
-    y[i]+=speedy[i];
+  for (int i=0; i<tweets.size(); i++) {
+    tweets.get(i).display();
+    tweets.get(i).move();
   }
 }
 
 void reload(int uge, String parti){
-  sttext =  new String[0];
-  col = new color[0];
-  speedx = new float[0];
-  speedy = new float[0];
-  x = new float[0];
-  y = new float[0];
+  tweets.clear();
   overskrift = parti+" på twitter i uge "+(uge+20);
   if ( db.connect() )
   {
@@ -46,14 +62,10 @@ void reload(int uge, String parti){
     println(Q);
     while (db.next ())
     {
-      sttext = append(sttext, db.getString("text"));
-      x = append(x, 0.5*width+random(max(width,sttext.length*width/3)));
-      y = append(y, yBorder+random(height-yBorder));
-      speedx = append(speedx, random(1,3));
-      speedy = append(speedy, random(-0.3,0.3));
-      col = append(col, color(random(360),80,99));
+      Tweet tweet = new Tweet(db.getString("text"));
+      tweets.add(tweet);
     }
-    println(sttext.length);
+    println(tweets.size());
   }
 }
 
