@@ -18,7 +18,7 @@ Eksempler giver en kort introduktion til SQL og forskellige eksempler på visual
 	Du kan også tilføje libaries via menuen i Processing `Sketch -> Import library -> Add library
 
 4. Hent database og læg i data mappen
-	- [st.db](https://github.com/mrbichel/medtek2016/releases/download/0.0.1/st.db.zip)
+	- [st.db](https://github.com/mrbichel/medtek2016/releases/download/0.0.1/st3.db.zip)
 
 5. Du kan også også dowbloade library, database og eksempel kode direkte under releases
 	- [Releases](https://github.com/mrbichel/medtek2016/releases)
