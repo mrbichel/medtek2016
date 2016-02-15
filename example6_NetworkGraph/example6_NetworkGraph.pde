@@ -5,8 +5,8 @@ import de.bezier.data.sql.*;
 SQLite db;
 
 
-int screen_x = 800;
-int screen_y = 600;
+int screen_x = 700;
+int screen_y = 700;
 
 
 //Initial username to graph
@@ -81,19 +81,29 @@ void setup() {
     size(screen_x, screen_y);
 
     createLocalGraph(userInit);
-    
+      
+    /*
     IntDict temp = network.get(userInit);
     temp.sortValuesReverse();
-     println(temp);
+    println(temp);
+    */
      
     displayInit(userInit, network);
 
 }
   
 void draw() {
-  background(255);
-  
+  background(30);
+  display(userInit, network);
 }
+
+
+//create arrays based on strength of user connections. Set the numbers for now.
+IntDict weakUsers;    // 1-5 posts
+int weakUsersUpper = 5; 
+IntDict mediumUsers; // 6-25 post
+int mediumUsersUpper = 25;
+IntDict strongUsers; // >25 posts
 
 void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
  
@@ -102,25 +112,25 @@ void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
  IntDict retweets = networkGraph.get(userCurrent);
  
  //lets have 3 levels of strength/closeness, from weakest to strongest, i.e. ascending
- retweets.sortValues();
+ // not really needed and having it scatter is sort of prettier/more interesting
+ //retweets.sortValues();
  
  //create arrays based on strength of user connections. Set the numbers for now.
- String[] weakUsers = new String[0];    // 1-5 posts
- int weakUsersUpper = 5; 
- String[] mediumUsers = new String[0]; // 6-25 post
- int mediumUsersUpper = 25;
- String[] strongUsers = new String[0]; // >25 posts
+ weakUsers = new IntDict();    // 1-5 posts
+ mediumUsers = new IntDict(); // 6-25 post
+ strongUsers = new IntDict(); // >25 posts
  
- String[] retweetUsers = retweets.keyArray();
- for(int i = 0; i < retweetUsers.length; i++){
-   int strength = retweets.get(retweetUsers[i]);
+ String[] retweetUserNames = retweets.keyArray();
+ for(int i = 0; i < retweetUserNames.length; i++){
+   int strength = retweets.get(retweetUserNames[i]);
    
+   //make new IntDicts organised by strength
    if(strength <= weakUsersUpper){
-     weakUsers = append(weakUsers, retweetUsers[i]);
+     weakUsers.set(retweetUserNames[i], strength);
    }else if(strength <= mediumUsersUpper){
-     mediumUsers = append(mediumUsers,retweetUsers[i]);
+     mediumUsers.set(retweetUserNames[i], strength);
    }else if(strength > mediumUsersUpper){
-     strongUsers = append(strongUsers, retweetUsers[i]);
+     strongUsers.set(retweetUserNames[i], strength);
    }else{
      //
    }     
@@ -129,13 +139,89 @@ void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
 
 
 
+//Global variables init:
+//TODO: move them to the top, well commented
+//how many pixels between the username and the bounding box
+
+
+int boxPadding = 5;    
+
+//weakUsers, mediumUsers, strongUsers
 void display(String userCurrent, HashMap<String,IntDict> networkGraph){
   
-  //display the userCurrent in the center.
+  //display the userCurrent in the center. 
+  //maximum radius would be the height of the screen minus textHeight
+  //find the big circle around the weak users and divide the arcs from there  
+
+  float angle = 0;
+  //50 pix padding from the screen edge.
+  float radius = height/2 - 50;
+
   
- //maximum radius would be the height of the screen minus textHeight
- //find the big circle around the weak users and divide the arcs from there
+  float slice = 360 / (float) weakUsers.size();    
+  //for each user in weakUsers
+  for(String userKey : weakUsers.keys()){  
+    float user_x = width/2 + cos(radians(angle))*(radius);
+    float user_y = height/2 + sin(radians(angle))*(radius);
+    angle = angle + slice;   
+    userBox(user_x, user_y, userKey , weakUsers.get(userKey));
+  }
+  
+  slice = 360 / (float) mediumUsers.size();
+  //for each user in mediumUsers
+  for(String userKey : mediumUsers.keys()){  
+    float user_x = width/2 + cos(radians(angle))*(radius * 0.6);
+    float user_y = height/2 + sin(radians(angle))*(radius * 0.6);
+    angle = angle + slice;   
+    userBox(user_x, user_y, userKey , mediumUsers.get(userKey));
+  }
+  
+  slice = 360 / (float) strongUsers.size();
+  //for each user in mediumUsers
+  for(String userKey : strongUsers.keys()){  
+    float user_x = width/2 + cos(radians(angle))*(radius * 0.3);
+    float user_y = height/2 + sin(radians(angle))*(radius* 0.3);
+    angle = angle + slice;   
+    userBox(user_x, user_y, userKey, strongUsers.get(userKey));
+  }
+  
+  //draw the center user last (to cover the lines)
+  //give it a strong weight
+  userBox( width/2, height/2, userCurrent, 100);
+}
+
+//needs a bunch of fill variables set... will check and draw line from center
+//todo use weight to effect color?
+void userBox(float x, float y, String userName, int weight){
+    
+  textSize(12);
+  float userNameHeight = textAscent() + textDescent();
+  float userNameWidth = textWidth(userName);
+  
+  //check the upperlimit on weight, since outside the mapping range is weird
+  int weightUpper = 30;
+  if (weight > weightUpper){
+    weight = weightUpper;
+  }
+  
+  //draw (weighted) line to center of screen
+  stroke(255, map(weight, 0, weightUpper, 0, 255));
+  line(x, y, width/2, height/2);
+  
+  //draw box
+  //fill(255); //set rect to white  
+  float fillMapped = map(weight, 0, weightUpper, 0, 255);
+  fill(255, fillMapped);
+  rectMode(CENTER);
+  textWidth(userName);
+  //center rectangle 
+  rect(x, y, userNameWidth+ 2*boxPadding, userNameHeight+ 2*boxPadding);
  
- 
- 
+  //draw username  
+  //fill(100);
+  float nameMapped = map(weight, 0, weightUpper, 0 , 255);
+  fill(0);
+  textAlign(CENTER, CENTER);
+  text(userName, x, y);
+
 }
