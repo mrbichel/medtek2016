@@ -5,8 +5,8 @@ import de.bezier.data.sql.*;
 SQLite db;
 
 
-int screen_x = 800;
-int screen_y = 600;
+int screen_x = 700;
+int screen_y = 700;
 
 
 //Initial username to graph
@@ -81,19 +81,29 @@ void setup() {
     size(screen_x, screen_y);
 
     createLocalGraph(userInit);
-    
+      
+    /*
     IntDict temp = network.get(userInit);
     temp.sortValuesReverse();
-     println(temp);
+    println(temp);
+    */
      
     displayInit(userInit, network);
 
 }
   
 void draw() {
-  background(255);
-  
+  background(50);
+  display(userInit, network);
 }
+
+
+//create arrays based on strength of user connections. Set the numbers for now.
+String[] weakUsers;    // 1-5 posts
+int weakUsersUpper = 5; 
+String[] mediumUsers; // 6-25 post
+int mediumUsersUpper = 25;
+String[] strongUsers; // >25 posts
 
 void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
  
@@ -102,14 +112,13 @@ void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
  IntDict retweets = networkGraph.get(userCurrent);
  
  //lets have 3 levels of strength/closeness, from weakest to strongest, i.e. ascending
- retweets.sortValues();
+ // not really needed and having it scatter is sort of prettier/more interesting
+ //retweets.sortValues();
  
  //create arrays based on strength of user connections. Set the numbers for now.
- String[] weakUsers = new String[0];    // 1-5 posts
- int weakUsersUpper = 5; 
- String[] mediumUsers = new String[0]; // 6-25 post
- int mediumUsersUpper = 25;
- String[] strongUsers = new String[0]; // >25 posts
+ weakUsers = new String[0];    // 1-5 posts
+ mediumUsers = new String[0]; // 6-25 post
+ strongUsers = new String[0]; // >25 posts
  
  String[] retweetUsers = retweets.keyArray();
  for(int i = 0; i < retweetUsers.length; i++){
@@ -129,13 +138,75 @@ void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
 
 
 
+//Global variables init:
+//TODO: move them to the top, well commented
+//how many pixels between the username and the bounding box
+
+
+int boxPadding = 5;    
+
+//weakUsers, mediumUsers, strongUsers
 void display(String userCurrent, HashMap<String,IntDict> networkGraph){
   
-  //display the userCurrent in the center.
+  //display the userCurrent in the center. 
+  //maximum radius would be the height of the screen minus textHeight
+  //find the big circle around the weak users and divide the arcs from there  
   
- //maximum radius would be the height of the screen minus textHeight
- //find the big circle around the weak users and divide the arcs from there
+  float slice = 360 / (float) weakUsers.length;
+  float angle = 0;
+  float radius = height/2 - 50;
+    
+  //for each user in weakUsers
+  for(int i=0; i < weakUsers.length; i++){  
+    float user_x = width/2 + cos(radians(angle))*(radius);
+    float user_y = height/2 + sin(radians(angle))*(radius);
+    angle = angle + slice;   
+    userBox(user_x, user_y, weakUsers[i], 1);
+  }
+  
+  slice = 360 / (float) mediumUsers.length;
+  //for each user in mediumUsers
+  for(int i=0; i < mediumUsers.length; i++){  
+    float user_x = width/2 + cos(radians(angle))*(radius * 0.6);
+    float user_y = height/2 + sin(radians(angle))*(radius * 0.6);
+    angle = angle + slice;   
+    userBox(user_x, user_y, mediumUsers[i], 1);
+  }
+  
+  slice = 360 / (float) strongUsers.length;
+  //for each user in mediumUsers
+  for(int i=0; i < strongUsers.length; i++){  
+    float user_x = width/2 + cos(radians(angle))*(radius * 0.3);
+    float user_y = height/2 + sin(radians(angle))*(radius* 0.3);
+    angle = angle + slice;   
+    userBox(user_x, user_y, strongUsers[i], 1);
+  }
+  
+  //draw the center user last (to cover the lines)
+  userBox( width/2, height/2, userCurrent, 1);
+}
+
+//needs a bunch of fill variables set... will check and draw line from center
+//todo use weight to effect color?
+void userBox(float x, float y, String userName, int weight){
+    
+  textSize(12);
+  float userNameHeight = textAscent() + textDescent();
+  float userNameWidth = textWidth(userName);
+  
+  //draw (weighted) line to center of screen
+  line(x, y, width/2, height/2);
+  
+  //draw box
+  fill(255); //set rect to white
+  rectMode(CENTER);
+  textWidth(userName);
+  //center rectangle 
+  rect(x, y, userNameWidth+ 2*boxPadding, userNameHeight+ 2*boxPadding);
  
- 
- 
+  //draw username  
+  fill(100);
+  textAlign(CENTER, CENTER);
+  text(userName, x, y);
+
 }
