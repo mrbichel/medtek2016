@@ -93,17 +93,17 @@ void setup() {
 }
   
 void draw() {
-  background(50);
+  background(30);
   display(userInit, network);
 }
 
 
 //create arrays based on strength of user connections. Set the numbers for now.
-String[] weakUsers;    // 1-5 posts
+IntDict weakUsers;    // 1-5 posts
 int weakUsersUpper = 5; 
-String[] mediumUsers; // 6-25 post
+IntDict mediumUsers; // 6-25 post
 int mediumUsersUpper = 25;
-String[] strongUsers; // >25 posts
+IntDict strongUsers; // >25 posts
 
 void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
  
@@ -116,20 +116,21 @@ void displayInit(String userCurrent, HashMap<String,IntDict> networkGraph){
  //retweets.sortValues();
  
  //create arrays based on strength of user connections. Set the numbers for now.
- weakUsers = new String[0];    // 1-5 posts
- mediumUsers = new String[0]; // 6-25 post
- strongUsers = new String[0]; // >25 posts
+ weakUsers = new IntDict();    // 1-5 posts
+ mediumUsers = new IntDict(); // 6-25 post
+ strongUsers = new IntDict(); // >25 posts
  
- String[] retweetUsers = retweets.keyArray();
- for(int i = 0; i < retweetUsers.length; i++){
-   int strength = retweets.get(retweetUsers[i]);
+ String[] retweetUserNames = retweets.keyArray();
+ for(int i = 0; i < retweetUserNames.length; i++){
+   int strength = retweets.get(retweetUserNames[i]);
    
+   //make new IntDicts organised by strength
    if(strength <= weakUsersUpper){
-     weakUsers = append(weakUsers, retweetUsers[i]);
+     weakUsers.set(retweetUserNames[i], strength);
    }else if(strength <= mediumUsersUpper){
-     mediumUsers = append(mediumUsers,retweetUsers[i]);
+     mediumUsers.set(retweetUserNames[i], strength);
    }else if(strength > mediumUsersUpper){
-     strongUsers = append(strongUsers, retweetUsers[i]);
+     strongUsers.set(retweetUserNames[i], strength);
    }else{
      //
    }     
@@ -151,39 +152,41 @@ void display(String userCurrent, HashMap<String,IntDict> networkGraph){
   //display the userCurrent in the center. 
   //maximum radius would be the height of the screen minus textHeight
   //find the big circle around the weak users and divide the arcs from there  
-  
-  float slice = 360 / (float) weakUsers.length;
+
   float angle = 0;
   float radius = height/2 - 50;
-    
+
+  
+  float slice = 360 / (float) weakUsers.size();    
   //for each user in weakUsers
-  for(int i=0; i < weakUsers.length; i++){  
+  for(String userKey : weakUsers.keys()){  
     float user_x = width/2 + cos(radians(angle))*(radius);
     float user_y = height/2 + sin(radians(angle))*(radius);
     angle = angle + slice;   
-    userBox(user_x, user_y, weakUsers[i], 1);
+    userBox(user_x, user_y, userKey , weakUsers.get(userKey));
   }
   
-  slice = 360 / (float) mediumUsers.length;
+  slice = 360 / (float) mediumUsers.size();
   //for each user in mediumUsers
-  for(int i=0; i < mediumUsers.length; i++){  
+  for(String userKey : mediumUsers.keys()){  
     float user_x = width/2 + cos(radians(angle))*(radius * 0.6);
     float user_y = height/2 + sin(radians(angle))*(radius * 0.6);
     angle = angle + slice;   
-    userBox(user_x, user_y, mediumUsers[i], 1);
+    userBox(user_x, user_y, userKey , mediumUsers.get(userKey));
   }
   
-  slice = 360 / (float) strongUsers.length;
+  slice = 360 / (float) strongUsers.size();
   //for each user in mediumUsers
-  for(int i=0; i < strongUsers.length; i++){  
+  for(String userKey : strongUsers.keys()){  
     float user_x = width/2 + cos(radians(angle))*(radius * 0.3);
     float user_y = height/2 + sin(radians(angle))*(radius* 0.3);
     angle = angle + slice;   
-    userBox(user_x, user_y, strongUsers[i], 1);
+    userBox(user_x, user_y, userKey, strongUsers.get(userKey));
   }
   
   //draw the center user last (to cover the lines)
-  userBox( width/2, height/2, userCurrent, 1);
+  //give it a strong weight
+  userBox( width/2, height/2, userCurrent, 100);
 }
 
 //needs a bunch of fill variables set... will check and draw line from center
@@ -194,18 +197,29 @@ void userBox(float x, float y, String userName, int weight){
   float userNameHeight = textAscent() + textDescent();
   float userNameWidth = textWidth(userName);
   
+  //check the upperlimit on weight, since outside the mapping range is weird
+  int weightUpper = 30;
+  if (weight > weightUpper){
+    weight = weightUpper;
+  }
+  
   //draw (weighted) line to center of screen
+  stroke(255, map(weight, 0, weightUpper, 0, 255));
   line(x, y, width/2, height/2);
   
   //draw box
-  fill(255); //set rect to white
+  //fill(255); //set rect to white  
+  float fillMapped = map(weight, 0, weightUpper, 0, 255);
+  fill(255, fillMapped);
   rectMode(CENTER);
   textWidth(userName);
   //center rectangle 
   rect(x, y, userNameWidth+ 2*boxPadding, userNameHeight+ 2*boxPadding);
  
   //draw username  
-  fill(100);
+  //fill(100);
+  float nameMapped = map(weight, 0, weightUpper, 0 , 255);
+  fill(0);
   textAlign(CENTER, CENTER);
   text(userName, x, y);
 
