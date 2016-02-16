@@ -1,13 +1,8 @@
 import de.bezier.data.sql.*;
 SQLite db;
-String[] word = {};
-int[] n = {};
-color[] col = {};
-float[] speedx = {};
-float[] speedy = {};
-float[] x = {};
-float[] y = {};
-float[] tS = {};
+
+ArrayList<Word> words;
+
 int maxn=-1;
 int minn=9999;
 int uge = 1;
@@ -18,7 +13,9 @@ int yBorder=70;
 String[] wi = {"stwi","stw2i","stw3i"};
 int wii = 2;
 int wiLimit = 1;
+
 void setup() {
+  words = new ArrayList<Word>();
   size( 800, 600 );
   colorMode(HSB);
   db = new SQLite( this, "../data/st.db" );  // open database file
@@ -30,15 +27,10 @@ void draw() {
   textSize(48);
   text(overskrift,200,50);
   int synligt = 0;
-  for (int i=0; i<word.length; i++) {
-    textSize(tS[i]);
-    fill(col[i]);
-    synligt+=max(0,x[i]);
-    text(word[i], x[i], y[i]);
-    x[i]-=speedx[i];
-
-    if (y[i]<yBorder || y[i]>=height) speedy[i]=speedy[i]*(-1);
-    y[i]+=speedy[i];
+  for (int i=0; i<words.size(); i++) {
+    words.get(i).display();
+    synligt+=max(0,words.get(i).x);
+    words.get(i).move();
   }
   if (synligt==0 && uge<33){
     uge++;
@@ -47,17 +39,9 @@ void draw() {
 }
 
 void reload(int uge,String parti){
-  word =  new String[0];
-  n = new int[0];
+  words.clear();
   maxn=-1;
   minn=9999;
-  col = new color[0];
-  speedx = new float[0];
-  speedy = new float[0];
-  x = new float[0];
-  y = new float[0];
-  tS = new float[0];
-
   overskrift = parti+" på twitter i uge "+(uge+20);
   if ( db.connect() )
   {
@@ -66,28 +50,16 @@ void reload(int uge,String parti){
     println(Q);
     while (db.next ())
     {
-      word = append(word, db.getString("word"));
-      n = append(n, db.getInt("n"));
-      maxn=max(maxn, db.getInt("n"));
-      minn=min(minn, db.getInt("n"));
+      Word word = new Word(db.getString("word"),db.getInt("n"));
+      words.add(word);
     }
     if(minn==maxn) maxn++;
-    println(word.length);
+    println(words.size());
     fill(0, 0, 200);
-    for (int i=0; i<word.length; i++) {
-      tS = append(tS, map(n[i],minn,maxn,16,40));
-      x = append(x, 0.5*width+random(max(width,word.length*width/30)));
-      float nyy = yBorder+int(random(height-yBorder));
-      y = append(y, nyy);
-      speedx = append(speedx, random(0.4*map(n[i],minn,maxn,4,2),0.7*map(n[i],minn,maxn,4,2)));
-      float nyspeedy=random(-0.3,0.3);
-//      float nyspeedy=random(0.3);
-//      if (nyy>0.55*height) nyspeedy=nyspeedy*(-1);
-      speedy = append(speedy, nyspeedy);
-      col = append(col, color(random(360),80,99));
+    for (int i=0; i<words.size(); i++) {
+      words.get(i).tS = map(words.get(i).n,minn,maxn,16,40);
+      words.get(i).speedx = random(0.4*map(words.get(i).n,minn,maxn,4,2),0.7*map(words.get(i).n,minn,maxn,4,2));
     }
-//      println(minn,maxn);
-//      printArray(speedx);
   }
 }
 

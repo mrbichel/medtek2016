@@ -1,10 +1,9 @@
 class Tweet {
   String tweet;
-  String sttext;
   color col;
   float x,y,speedx,speedy;
   Tweet(String text){
-      sttext = text;
+      tweet = text;
       x = 0.5*width+random(max(width,tweets.size()*width/3));
       y = yBorder+random(height-yBorder);
       speedx = random(1,3);
@@ -13,7 +12,7 @@ class Tweet {
   }
   void display() {
     fill(col);
-    text(sttext, x, y);
+    text(tweet, x, y);
   }
   void move() {
     x-=speedx;
