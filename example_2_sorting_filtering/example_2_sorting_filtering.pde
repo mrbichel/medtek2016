@@ -70,7 +70,8 @@ void draw() {
 
 // Øvelser
 // 1. sorter tweets efter hvilke politikere der har skrevet dem
-// 2. Prøv at vælge politikernes billede og sæt ind før deres tweet
+// 2. Find mere end 100 tweets
+// 3. Prøv at vælge politikernes billede og sæt ind før deres tweet (kræver natural join med user kolonne )
 
 
 
