@@ -27,8 +27,7 @@ def initiate_user_table():
 	    users.append(userInfo)
 
 	pprint.pprint(users)
-
-	c.executemany('INSERT INTO users VALUES (?,?,NULL)', users)
+	c.executemany('INSERT INTO users VALUES (?,?,NULL,NULL,NULL,NULL,NULL,NULL)', users)
 
 def add_raw_twitter_json_to_users():
 	users = []
@@ -37,20 +36,19 @@ def add_raw_twitter_json_to_users():
 		print(row[0])
 
 	for user in users:
-		c.execute("UPDATE users SET profile_image_url=?, name=?, url=?, description=?, friends_count=?, id=?, statuses_count=? WHERE user=?", (
+		c.execute("UPDATE users SET profile_image_url=?, name=?, url=?, description=?, friends_count=?, user_id=?, statuses_count=? WHERE user=?", (
 			user.profile_image_url, 
 			user.name, 
 			user.url, 
 			user.description, 
 			user.friends_count, 
-			user.user_id, 
+			user.id, 
 			user.statuses_count, 
 			user.screen_name))
 
 
 #initiate_user_table()
 add_raw_twitter_json_to_users()
-
 conn.commit()
 conn.close()
 

@@ -58,10 +58,10 @@ void setup() {
        // nu kan vi tilgå de forskellige felter i st tabellens kolonner 
        // med følgende funktioner
        // String number = db.getString([KOLONNENS_NAVN]) 
-         // Bruges til at tilgå tekstfelter
+       // Bruges til at tilgå tekstfelter
        
        // int tal = db.getInt([KOLONNENS_NAVN]) 
-         // Bruges til at tilgå tal felter
+       // Bruges til at tilgå tal felter
          
        // I vores tabel har vi kun de to typer data, tekst og heltal
        // I processing bruger vi datatypen String til tekst og int til heltal
@@ -80,15 +80,10 @@ void setup() {
        //______________________________________
        
        // Øvelser:
-       // 1. prøv at skrive ud hvem der har skrevet twitter beskeden, ligger i kolonnen user
-       
-         
+       // 1. prøv at skrive ud hvem der har skrevet twitter beskeden, ligger i kolonnen user       
         
      }
      
      exit();
   }
 }
-
-
-       // Yderligere læsning:

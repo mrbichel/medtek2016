@@ -65,10 +65,8 @@ void setup() {
   
   if ( db.connect() ) {
     searchWord("arbejde");
-  }
-  
+  } 
 }
-
 
 void draw() {
   background(0);
@@ -117,7 +115,6 @@ void mousePressed() {
     searchWord(selectedWord);
   }  
 }
-
 
 // Øvelser
 // 1. Ændrer programmet så det søger på en kombination af flere ord
