@@ -24,33 +24,31 @@ Eksempler giver en kort introduktion til SQL og forskellige eksempler på visual
 	- [Releases](https://github.com/mrbichel/medtek2016/releases)
 
 
-1. Introduktion til SQL
-	
-	Forbind til database 
-	Formål
-	Øvelser:
-2. Arbejde med timestamps
+## Eksempler
 
-2. Sortering of filtering 
-	sort
-	filter
+1. example_1_db_connect 
+	Hvordan fobinder man til SQL databasen
+	Skriv data ud til konsol
 
-3. Søgning LIKE
-	keyword search
-	find mønstre
+2. example_2_sorting_filtering
+	Sortering og filtrering af data. 
+	Introduktion af LIMIT og WHERE.
+	Vi tegner det første data til skærmen.
 
-4. Ord, 1, 2 n-gram 
-	Wordclouds
+3. example_3_keyword search
+	Søgning af data der matcher et mønster. 
+	Introduktion af LIKE operator.
+	Vi flytter database søgning til en funktion som vi kan bruge dynamisk i et interaktivt program.
+	Vi introducerer en klasse til at gemme tweets.
 
-5. Data over tid
+4. example_4_time_and_dates
+	Kort introduktion til hvordan man arbejder med unix time stamps, tidspunkter og datoer i processing (java)
+
+5. example_5_1
 
 6. Sammenlign
 
 7. Netværksdiagram
 	
-
-
-## Bonus evt. 
-twitter4j - find live data
 
 
