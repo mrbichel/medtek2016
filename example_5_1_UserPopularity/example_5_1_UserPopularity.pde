@@ -4,6 +4,7 @@
 import de.bezier.data.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 SQLite db;
 
 
@@ -31,7 +32,7 @@ int offset_y = (screen_y - graph_y) / 2;
 int[] user1_timestamps;
 
 
-void drawAxis(){   //should be named drawAxes which is the proper plural of Axis, but that's a bit much...
+void drawAxes(){
   
   //set the line color. Greyscale number from 0 (black) to 255 (white)
   stroke(0);
@@ -44,7 +45,6 @@ void drawAxis(){   //should be named drawAxes which is the proper plural of Axis
   line(offset_x, offset_y + graph_y, offset_x + graph_x, offset_y + graph_y);
      
 }
-
 
 void setup() {
 
@@ -74,7 +74,7 @@ void draw() {
   
   background(128);
   
-  drawAxis();
+  drawAxes();
   
   //can add fill later, with the co-ords of the x-axis as the base.
   noFill();
@@ -86,7 +86,7 @@ void draw() {
   //init variables for the loop below, and to make things a bit more readable
   int user1_tweetCountCurrent = 0;  
   int user1_tweetCountTotal = user1_timestamps.length;
-int user1_firstTime = user1_timestamps[0];  
+  int user1_firstTime = user1_timestamps[0];  
   //get the last time stamp in the timestamps array
   int user1_lastTime = user1_timestamps[user1_timestamps.length - 1];
   
@@ -100,7 +100,6 @@ int user1_firstTime = user1_timestamps[0];
     //float vertex_y = map(user1_tweetCountCurrent, 0, user1_tweetCountTotal, height, 0);
     float vertex_y = map(user1_tweetCountCurrent, 0, user1_tweetCountTotal, offset_y + graph_y , offset_y);
     vertex(vertex_x, vertex_y);
-    println("vertex:("+ vertex_x + ","+vertex_y+")"); 
     user1_tweetCountCurrent++;
   } 
   

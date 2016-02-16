@@ -53,8 +53,7 @@ void searchWord(String _keyword) {
       
       tweets.add(tweet);
       
-      println(tweet.words);
-      
+      println(tweet.words);     
     }
 }
 
