@@ -5,11 +5,11 @@
 import de.bezier.data.sql.*;
 SQLite db;
 
-// lad os laveet array af text som vi kan gemme twets i og vise dem på skærmen
+// lad os lave en arraylist af text som vi kan gemme tweets i og vise dem på skærmen
 // vi gemmer vores tweets sp vi ikke skal hente dem fra databasen hver eneste frame vi vil tegne dem
 // det tager relativt lang tid at hente data ud af databasen, men når vi først har det i vores lokale 
 // hukommelse for vores program går det lynhurtigt
-String[] tweetStrings;
+ArrayList<String> tweetStrings;
 
 // Vi opretter 2 variabler vi bruger til at lave en simpel scroll feature med musen
 float offsetX, offsetY;
@@ -19,7 +19,7 @@ void setup() {
   size( 800, 600 );
   
   // Vi skal initialiserer vores array før vi kan bruge det
-  tweetStrings = new String[0];
+  tweetStrings = new ArrayList<String>();
   
   db = new SQLite( this, "../data/st.db" );
 
@@ -27,12 +27,11 @@ void setup() {
     
     // I SQL bruger vi keywordet where til at definerer en filtrering af vores data
     // med keywordet order by kan vi sortere resultaterne efter et felt
-    // med keywordet limit begrænser vi hvor resultater vi maximalt vil have returneret
-    
+    // med keywordet limit begrænser vi hvor resultater vi maximalt vil have returneret   
     // Her finder vi de første 100 tweets sorteret alfabetisk som er postet af politkere i Liberal Alliance 
     
     String parti = "LA";
-    String Q = "select time, text from st where parti='"+parti+"'"+" order by text limit 100" ;
+    String Q = "select time, text from st natural join users where parti='"+parti+"'"+" order by text limit 100  " ;
 
     db.query(Q);
     
@@ -40,7 +39,7 @@ void setup() {
       String tweet = db.getString("text");
       
       // vi tilføjer hvert resultat fra vores query til vores array af tweets
-      tweetStrings = append(tweetStrings, tweet);
+      tweetStrings.add(tweet);
     }
   }
 }
@@ -62,17 +61,17 @@ void draw() {
     if(mouseY < height*0.25 && mouseY > 0) offsetY+=2;
   }
   
-  for(int i=0; i<tweetStrings.length; i++) {
-    text(tweetStrings[i], 20 +offsetX , offsetY + 20 + i * 30);
+  for(int i=0; i<tweetStrings.size(); i++) {
+    text(tweetStrings.get(i), 20 +offsetX , offsetY + 20 + i * 30);
   }
-  
 }
 
 // Øvelser
 // 1. sorter tweets efter hvilke politikere der har skrevet dem
 // 2. Find mere end 100 tweets
-// 3. Prøv at vælge politikernes billede og sæt ind før deres tweet (kræver natural join med user kolonne )
-
-
+// 3. Prøv at vælge politikernes billede og sæt ind før deres tweet 
+    // Hint: Du skal opdaterer din query med 
+    // "select time, text, profile_image_url from st natural join users (...)" for at inkluderer profilbilleder fra user tabellen
+    // profile_image_url indeholder et link til profilbilledet
 
 
