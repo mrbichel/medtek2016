@@ -37,30 +37,18 @@ def add_raw_twitter_json_to_users():
 		print(row[0])
 
 	for user in users:
-		c.execute("UPDATE users SET profile_image_url=?, name=?, url=?, description=?, friends_count=?, id=?, statuses_count=? WHERE screen_name=?", (
+		c.execute("UPDATE users SET profile_image_url=?, name=?, url=?, description=?, friends_count=?, id=?, statuses_count=? WHERE user=?", (
 			user.profile_image_url, 
 			user.name, 
 			user.url, 
 			user.description, 
 			user.friends_count, 
-			user.id, 
+			user.user_id, 
 			user.statuses_count, 
 			user.screen_name))
 
 
-#public_tweets = api.home_timeline()
-#for tweet in public_tweets:
-#    print tweet.text
- ## https://dev.twitter.com/rest/reference/get/users/show
- ## get all politicians from st.db 
-
- ## for each fill into politicans db and enrich with new twitter data
-
-## user = api.get_user('twitter')
-
-
 #initiate_user_table()
-
 add_raw_twitter_json_to_users()
 
 conn.commit()
