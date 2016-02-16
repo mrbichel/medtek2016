@@ -44,7 +44,7 @@ void setup() {
 
        println(name + ": " + tweet);      
 
-       // Prøv at tilgå andre felter i users tabellen, fx. url, description eller statuses_count
+       // ØVELSE: Prøv at tilgå andre felter i users tabellen, fx. url, description eller statuses_count
         
      }
      

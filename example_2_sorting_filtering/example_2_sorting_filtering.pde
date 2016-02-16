@@ -73,5 +73,6 @@ void draw() {
     // Hint: Du skal opdaterer din query med 
     // "select time, text, profile_image_url from st natural join users (...)" for at inkluderer profilbilleder fra user tabellen
     // profile_image_url indeholder et link til profilbilledet
+    // Se det næste eksempel for at forstå natural join
 
 

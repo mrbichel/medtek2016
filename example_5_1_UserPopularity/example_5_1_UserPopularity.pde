@@ -1,5 +1,7 @@
 // Example 5 - User Poplularity Line Graph
-// Plots the number of posts a user has over time
+
+// Når vi skal se historierne i vores data er det ofte relevant at visualisere udvikling over tid
+// Her et simpelt eksempel hvor vi ...
 
 import de.bezier.data.sql.*;
 import java.text.SimpleDateFormat;
@@ -7,11 +9,10 @@ import java.util.Date;
 
 SQLite db;
 
-
 String user1 = "larsloekke";
 
-//sort by time
-//ASC|DESC stands for Ascending or Descending. Ascending is counting up, Descending is counting down.
+// sort by time
+// ASC|DESC stands for Ascending or Descending. Ascending is counting up, Descending is counting down.
 String queryUser1 = "SELECT time FROM st WHERE text LIKE '%" + user1 + "%' OR user='" + user1 + "' ORDER BY time ASC";
 
 int screen_x = 800;
@@ -32,18 +33,14 @@ int offset_y = (screen_y - graph_y) / 2;
 int[] user1_timestamps;
 
 
-void drawAxes(){
-  
-  //set the line color. Greyscale number from 0 (black) to 255 (white)
+void drawAxes(){  
   stroke(0);
-  //set the line thickness / weight
   strokeWeight(2);
   
   //draw the y axis. starting form the top left down to bottom left.
   line(offset_x, offset_y, offset_x, offset_y + graph_y);
   //draw the x axis. starting from the last point bottom left, to bottom right
   line(offset_x, offset_y + graph_y, offset_x + graph_x, offset_y + graph_y);
-     
 }
 
 void setup() {
@@ -66,9 +63,7 @@ void setup() {
     }
   }
   
-  
 }
-
 
 void draw() {
   
