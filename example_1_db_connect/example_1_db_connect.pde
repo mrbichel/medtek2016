@@ -4,16 +4,28 @@
 
 // Vi bruger tabellen st der har følgende kolonner
 
-    // parti
-    // text
-    // user
-    // id
-    // image
-    // created_at
-    // time
-    // dayno
-    // weekno
-    
+
+//    +---------+--------------+-------------------+--------------------+---------------+------------+-----------+--------+--------+
+//    | parti   | text         | user              | id                 | image         | created_at | time      | dayno  | weekno |
+//    +---------+--------------+-------------------+--------------------+---------------+------------+-----------+--------+--------+
+//  1 | "S"     | "RT @benedi" | "rasmushorn"      | 682951506958618625 |"http://abs.tw"|Fri Jan 01  |1451663302 |229     |33      |
+//  2 | "S"     | "Håber ikke" | "YildizAkdogan"   | 682947465742532612 |"http://abs.tw"|------------|-----------|--------|--------|
+//  3 | "ALT"   | "RT @uffeel" | "rasmusnordqvist" | 682942258270875648 |"http://abs.tw"|------------|-----------|--------|--------|
+//  4 | "S"     | "@benedikte" | "JulieSkovsby"    | 682942241829208064 |"http://abs.tw"|------------|-----------|--------|--------|
+//  5 | "S"     | "RT @BosseS" | "mettereissmann"  | 682941332046921728 |"http://abs.tw"|------------|-----------|--------|--------|
+//  6 | "S"     | "Godt nytår" | "Antorini123"     | 682940712426598402 |"http://abs.tw"|------------|-----------|--------|--------|
+//  7 | "DF"    | "Krydser fi" | "MFjeppejakobsen" | 682933666872451072 |"http://abs.tw"|------------|-----------|--------|--------|
+//    +---------+--------------+-----------+------------+---------------+---------------+------------+-----------+--------+--------|
+
+// Ovenstående er en visuel repræsentation af hvad der svarer til følgende query "select * from st order by time limit 7" har 
+// forkortet text og image og kun indsat tidspunkter for den første.
+
+// Forkortet data for #4 ovenfor:
+//     text: @benediktekiaer Er det virkelighed? Det er da et stort privilegium for kommunens småbørnsfamilier. #dkpol #kom.velfærd"  
+//     image: "http://abs.twimg.com/images/themes/theme1/bg.png"  
+//     created_at: "Fri Jan 01 15:11:33 +0000 2016"  
+
+
 // En tabel i en database er lidt som et regneark med rækker og kollonnner
 // Hver kolonne definerer en type data vi lagrer og hver række indeholder den specifikke data
 // I dette tilfælde er hver række et tweet og forskellige metadata om det tweet
@@ -87,3 +99,6 @@ void setup() {
      exit();
   }
 }
+
+
+
