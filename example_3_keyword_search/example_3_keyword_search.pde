@@ -21,13 +21,18 @@ void searchWord(String _keyword) {
   
    lastsearchword = _keyword;
    
-    // I SQL bruger vi keywordet like til at finde resultater der matcher et bestemt mønster
+    // I SQL bruger vi operatoren LIKE til at finde resultater der matcher et bestemt mønster
     // Det kan fx være et eller flere ord der indgår i et tweet 
     // eller vi kan finde alle brugere der starter med et bestemt bogstav
     
     // Lad os bygge en lille søgemaskine til at finde tweets der har ord tilfælles
     
-    // TODO: forklar struktur af like clause ...
+    // Når man bruger like operatoren kan man indsætte % (procenttegn) eller _ (underscore) til 
+    // at definerer et mønster. 
+    // % matcher en hvilken som helst sekvens af ingen eller flere karakterer i en streng.
+    // _ matcher en hvilken som helst enkelt karakter, i enten upper eller lower case 
+    // hver opmærksom på at sqlite kun forstår upper lower case sammenhæng for ASCII karakterer 
+    // det betyder at fx. æøå ikke matcher ÆØÅ
     
     String Q = "select text from st where text like '%" + _keyword + "%' order by text limit 50" ;
 
@@ -51,7 +56,6 @@ void searchWord(String _keyword) {
       println(tweet.words);
       
     }
-  
 }
 
 void setup() {
