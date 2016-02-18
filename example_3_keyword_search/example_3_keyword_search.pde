@@ -118,4 +118,4 @@ void mousePressed() {
 }
 
 // Øvelser
-// 1. Ændrer programmet så det søger på en kombination af flere ord
+// 1. Ændre programmet så det søger på en kombination af flere ord
