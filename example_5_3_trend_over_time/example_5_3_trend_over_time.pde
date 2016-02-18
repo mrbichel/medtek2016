@@ -1,48 +1,30 @@
 // Example 5 - User Poplularity Line Graph
-// Plots the number of posts a user has over time
+// Plots the number of posts containing certain keywords for different parties over time
 
 import de.bezier.data.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 SQLite db;
 
-// can be nice to define global variables at the top of the program
-// this way if we need to make quick changes to things that we might expect we might need, in this case screen width
-// we can quickly change it. 
-// what we want to do through the rest of the program is also make sure that we only reference the variables by name,
-// instead of inserting a "hard coded" value later. That is, we don't want be using the bare number "800" else where in the program
-// because if we need to make the change later, then we'd have to go and look through the code. Which sucks.
 int screen_x = 800;
 int screen_y = 600;
 
-// Similarly, we define other static graph width/height values here.
-// Allow the graph to be smaller than the screen, so we have space to add post count and dates
-// We currently define the graph is centered aligned, and the code below reflects this. if we changed the code below
-// to allow different offsets, then we'd also want to change this comment to describe something else. Again, for ease of future changes.
 int graph_x = 600;
 int graph_y = 500;
 
-//The offset is how much space/padding we have between the edge of the screen 
-//and the graph, which is centered for now
 int offset_x = (screen_x - graph_x) / 2;
 int offset_y = (screen_y - graph_y) / 2;
 
-//the real values as bounds of the graph. That is, the un-mapped/un-scaled time values.
 int startTime;
 int endTime;
 int tweetCountTotal;
 
-//this variable helps us track our current x-coordinate whilst writing usernames
 float usernamesWidth;
 
-// Draw the Axes of the graph.
-// Should be named drawAxes which is the proper plural of Axis, 
-// pronounced how one might expect axis pluralised would sound,
-// not like a pair of axes for chopping. But that's some pretty obscure English...
+String keyword = "øko";
+
 void drawAxis(){    
-  //set the line color. Greyscale number from 0 (black) to 255 (white)
   stroke(0);
-  //set the line thickness / weight. Play with this to find different looks. Can be a float.
   strokeWeight(2);
   
   //draw the y axis. starting form the top left down to bottom left.
@@ -51,41 +33,12 @@ void drawAxis(){
   line(offset_x, offset_y + graph_y, offset_x + graph_x, offset_y + graph_y);    
 }
 
-// Create a User class that will contain the information about their posts from example 5.1
-// To start having more users to compare to, we want to organise the User variables into a class
-// so they are easier to organise, pull information from, and keep the data from before so we're not
-// constaintly making new big SQL data calls.
 
-// We also create a class so that the information belonging to each User is "held together" or related strongly
-// in each. That is, Name, timestaps and tweetcountTotal will all then be contained in a single User object.
-// Another way of hold this data is in seperate arrays, but then we have to be more careful when referencing/pulling 
-// the information out of each different data structure...
-
-// So, whenever we make a new user, we populate it with data from the DB and then store the user in 
-// the ArrayList of User objects
-
-// This first line defines the next code block to be about a new object class, that is named 'User'
 class User {
-  //We now define the list of properties that give our new User object it's "User-ness"
-  //First thing a User has is a name 
-  String name;
-  //Second thing a User has is a bunch of tweets that occured at a certain time.
-  //For our graph, we only need to know the time a post was made, not the content/text of the post.
-  //So for this sketch, we only need an array of ordered timestamps of tweets, not the tweets themselves.
-  //full array of the time stamps from the db query
-  int[] timestamps;
 
-  //Third property is more for convenience. We could calculated the total number of tweets each time by looking at timestamp.legth()
-  //But it's also nice and clear in later code to call the the tweetCountTotal directly.
+  String name;
+  int[] timestamps;
   int tweetCountTotal; 
-  
-  // we could also include more properties for the User, such as a display color, or the array of tweets etc etc.
-  // but for now, let's just stick to the timestamps
-  
-  //Class constructor
-  //Once we've defined an Object by stating a bunch of properties, was can then define how a new object is to be actually
-  //created at runtime. 
-  //The simplest way would be to create a User object with default values;
 
   User(){
     name = "";
@@ -102,7 +55,7 @@ class User {
     timestamps = new int[0];
     tweetCountTotal = 0;
 
-    String userQuery = "SELECT time FROM st WHERE text LIKE '%arbejde%' and parti='"+ name + "' ORDER BY time ASC";
+    String userQuery = "SELECT time FROM st WHERE text LIKE '%" + keyword + "%' and parti='"+ name + "' ORDER BY time ASC";
 
     //we're relying on the db global object/variable being created before we do any User object creation                        
     if ( db.connect() ) { 
@@ -136,20 +89,31 @@ void setup() {
 }
 
 void draw() {
-  
+  smooth();
+
   background(128);
   
   drawAxis();
+  curveTightness(0.98);
   
   noFill();
-  strokeWeight(5.0);
+  strokeWeight(2.0);
   strokeJoin(ROUND);
     
-  User userFocus = userList.get(0); 
-  startTime = userFocus.timestamps[0];  
+  User userFocus = userList.get(0);
+  startTime = userList.get(0).timestamps[0];
+  endTime = 0;
+  tweetCountTotal = 0;
+
+  for(int i=0; i<userList.size();i++) {
+    startTime = min(userList.get(i).timestamps[0], startTime);
+    endTime = max(userList.get(i).timestamps[userList.get(i).timestamps.length - 1], endTime);
+    tweetCountTotal = max(userList.get(i).tweetCountTotal, tweetCountTotal) / 4;
+  }
+  //startTime = userFocus.timestamps[0];  
   //get the last time stamp in the timestamps array
-  endTime = userFocus.timestamps[userFocus.timestamps.length - 1];
-  tweetCountTotal = 10;//userFocus.timestamps.length;
+  //endTime = userFocus.timestamps[userFocus.timestamps.length - 1];
+  //userFocus.timestamps.length;
 
   textSize(20);
   usernamesWidth = 0.0;
@@ -171,8 +135,6 @@ void draw() {
   fill(0,255,0);
   writeUsername(userList.get(2).name);
 
-
-
 }
 
 
@@ -183,7 +145,6 @@ void drawPopularity(User user){
   
   int tweetCountCurrent = 0;
   //int tweetCountTotal = user.timestamps.length;
-
   beginShape();
   // unlike the previous example we bin the data in to intervals of one day 
 
@@ -194,45 +155,35 @@ void drawPopularity(User user){
     //map the current timestamp
     int timeValue = user.timestamps[i];
     
-    /*if(timeValue < startTime){
+    if (timeValue >= startTime && timeValue < endTime){
+      
+
+      // en meget nem måde at lave visulisering per dag i stedet for at vokse kontinuerligt
+      // en bedre men lidt mere besværlig måde er at gå igennen dagene en af gangen og se hvor 
+      // tweets der falder på dagene, på den måde vil sammeligningen være mere præcis 
+      // og det vil være nemmere at sætte labels og akser på visualiseringen
 
       tweetCountCurrent++;
-      // reset count everytime 24 hours passes
-      if(day - timeValue > (24*60*60)) {
+      if(timeValue - day > (24*60*60)) {
           tweetCountCurrent = 0;
           day = timeValue;
       }
-
-    } else */
-    if (timeValue >= startTime && timeValue < endTime){
       
-      //float vertex_x = map(timeValue, user1_firstTime, user1_lastTime, 0, width);
+
       float vertex_x = map(timeValue, 
                           startTime, endTime, 
                           offset_x, offset_x + graph_x);
-      //float vertex_y = map(user1_tweetCountCurrent, 0, user1_tweetCountTotal, height, 0);
       float vertex_y = map(tweetCountCurrent, 
                           0, tweetCountTotal, 
                           offset_y + graph_y , offset_y);
-      vertex(vertex_x, vertex_y);
-      tweetCountCurrent++;
+      curveVertex(vertex_x, vertex_y);
 
-      if(timeValue - day > (24*60*60)) {
-          //tweetCountCurrent = 0;
-          day = timeValue;
-      }
-
-    }else{
-      //out of time range, so can do nothing, or exit the loop early
-      break;
     }
-    
-    if(tweetCountCurrent > tweetCountTotal){
-      break;
-    }   
-    
   } 
   endShape();
+
+  fill(0);
+  text(keyword + " over tid", offset_x, 30);
 } 
 
 void writeUsername(String name){   
@@ -241,12 +192,8 @@ void writeUsername(String name){
   usernamesWidth += textWidth(username); 
 }
 
-  // lad os gå gennem alle tweets i intervaller af en dag, så vi får en kurve over hvilke dage der er blevet tweetet mest
-  // vores tweet tabel har et dayno felt der sparer os for lidt jonglering med timestamps i java
-  // dayno løber far dag 0 til dag 
-
-  // folketingsvalget var den 18. juni 2015.
-  // dayno 32 
-
-
+// Øvelser:
+// 1. tegn folketingsvalget eller andre begivenheder ind på tidlinjen for at sætte det ind en kontekts. 
+// 2. definer selv tidsintervallet
+// 3. sæt tal på de to akser
 
