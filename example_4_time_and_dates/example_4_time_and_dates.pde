@@ -34,7 +34,7 @@ void setup() {
 
       // java bruger unix timestamps der defineret ned til millissekunder og ikke kun sekunder
       // du skal derfor gange tidspunktet med 1000
-      Date date = new Date((long)time*1000);       
+      Date date = new Date((long)time*1000);
       
       // brug SimpleDateFormat klassen til at definerer hvordan dato og tid skal formateres
       // se oversigt her over de forskellige bogstaver du kan bruge: 
@@ -51,7 +51,6 @@ void setup() {
       // 1. Formater datoen med navnet på hvilken ugedag 
 
     }
-
     exit();
   }
 }

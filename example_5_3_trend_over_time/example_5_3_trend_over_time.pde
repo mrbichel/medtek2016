@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 SQLite db;
 
-
 // can be nice to define global variables at the top of the program
 // this way if we need to make quick changes to things that we might expect we might need, in this case screen width
 // we can quickly change it. 
@@ -36,8 +35,6 @@ int tweetCountTotal;
 //this variable helps us track our current x-coordinate whilst writing usernames
 float usernamesWidth;
 
-
-
 // Draw the Axes of the graph.
 // Should be named drawAxes which is the proper plural of Axis, 
 // pronounced how one might expect axis pluralised would sound,
@@ -53,8 +50,6 @@ void drawAxis(){
   //draw the x axis. starting from the last point bottom left, to bottom right
   line(offset_x, offset_y + graph_y, offset_x + graph_x, offset_y + graph_y);    
 }
-
-
 
 // Create a User class that will contain the information about their posts from example 5.1
 // To start having more users to compare to, we want to organise the User variables into a class
@@ -87,8 +82,6 @@ class User {
   // we could also include more properties for the User, such as a display color, or the array of tweets etc etc.
   // but for now, let's just stick to the timestamps
   
-  
-  
   //Class constructor
   //Once we've defined an Object by stating a bunch of properties, was can then define how a new object is to be actually
   //created at runtime. 
@@ -101,7 +94,6 @@ class User {
   }
   
   
-  
   //called when we create new User object
   User(String tempName){
     
@@ -109,9 +101,8 @@ class User {
     name = tempName;
     timestamps = new int[0];
     tweetCountTotal = 0;
-        
-    String userQuery = "SELECT time FROM st WHERE text LIKE '%" + name 
-                        + "%' ORDER BY time ASC";
+
+    String userQuery = "SELECT time FROM st WHERE text LIKE '%arbejde%' and parti='"+ name + "' ORDER BY time ASC";
 
     //we're relying on the db global object/variable being created before we do any User object creation                        
     if ( db.connect() ) { 
@@ -126,8 +117,6 @@ class User {
       println("DB connection fail");
       exit(); //quit the program.
     }
-
-
   }
 }
 
@@ -141,9 +130,9 @@ void setup() {
   
   userList = new ArrayList<User>();
 
-  userList.add(new User("larsloekke"));
-  userList.add(new User("uffeelbaek"));
-  userList.add(new User("Trinebramsen"));  
+  userList.add(new User("DF"));
+  userList.add(new User("V"));
+  userList.add(new User("ALT"));  
 }
 
 void draw() {
@@ -160,7 +149,7 @@ void draw() {
   startTime = userFocus.timestamps[0];  
   //get the last time stamp in the timestamps array
   endTime = userFocus.timestamps[userFocus.timestamps.length - 1];
-  tweetCountTotal = userFocus.timestamps.length;
+  tweetCountTotal = 10;//userFocus.timestamps.length;
 
   textSize(20);
   usernamesWidth = 0.0;
@@ -181,6 +170,9 @@ void draw() {
   drawPopularity(userList.get(2));  
   fill(0,255,0);
   writeUsername(userList.get(2).name);
+
+
+
 }
 
 
@@ -188,19 +180,31 @@ void draw() {
 void drawPopularity(User user){
     
   //First user in the userList is who we set the graph scaled to... everyone else in the list is a comparison 
-
+  
   int tweetCountCurrent = 0;
   //int tweetCountTotal = user.timestamps.length;
 
   beginShape();
+  // unlike the previous example we bin the data in to intervals of one day 
+
+  int day = startTime;
+
   //for each time stamp in the timestamp array
   for (int i=0; i < user.timestamps.length ; i++){
     //map the current timestamp
     int timeValue = user.timestamps[i];
     
-    if(timeValue < startTime){
-      tweetCountCurrent++;      
-    } else if (timeValue >= startTime && timeValue < endTime){
+    /*if(timeValue < startTime){
+
+      tweetCountCurrent++;
+      // reset count everytime 24 hours passes
+      if(day - timeValue > (24*60*60)) {
+          tweetCountCurrent = 0;
+          day = timeValue;
+      }
+
+    } else */
+    if (timeValue >= startTime && timeValue < endTime){
       
       //float vertex_x = map(timeValue, user1_firstTime, user1_lastTime, 0, width);
       float vertex_x = map(timeValue, 
@@ -212,6 +216,12 @@ void drawPopularity(User user){
                           offset_y + graph_y , offset_y);
       vertex(vertex_x, vertex_y);
       tweetCountCurrent++;
+
+      if(timeValue - day > (24*60*60)) {
+          //tweetCountCurrent = 0;
+          day = timeValue;
+      }
+
     }else{
       //out of time range, so can do nothing, or exit the loop early
       break;
@@ -230,8 +240,6 @@ void writeUsername(String name){
   text(username, offset_x + usernamesWidth, offset_y + graph_y + offset_y/2);
   usernamesWidth += textWidth(username); 
 }
-
-
 
   // lad os gå gennem alle tweets i intervaller af en dag, så vi får en kurve over hvilke dage der er blevet tweetet mest
   // vores tweet tabel har et dayno felt der sparer os for lidt jonglering med timestamps i java

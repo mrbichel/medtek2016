@@ -26,29 +26,43 @@ Eksempler giver en kort introduktion til SQL og forskellige eksempler på visual
 
 ## Eksempler
 
-1. example_1_db_connect 
+1. example_1_db_connect   
 	Hvordan fobinder man til SQL databasen
 	Skriv data ud til konsol
 
-2. example_2_sorting_filtering
-	Sortering og filtrering af data. 
-	Introduktion af LIMIT og WHERE.
-	Vi tegner det første data til skærmen.
+2. example_2_sorting_filtering  
+	Sortering og filtrering af data.   
+	Introduktion af LIMIT og WHERE.  
+	Vi tegner det første data til skærmen.  
 
-3. example_3_keyword search
+	example_2_3 forklaring af natural joins   
+
+	example_2_3 brug group by til at finde tilfældig bruger  
+
+3. example_3_keyword search  
 	Søgning af data der matcher et mønster. 
 	Introduktion af LIKE operator.
-	Vi flytter database søgning til en funktion som vi kan bruge dynamisk i et interaktivt program.
-	Vi introducerer en klasse til at gemme tweets.
+	Vi flytter database søgning til en funktion som vi kan bruge dynamisk i et interaktivt program.  
+	Vi introducerer en klasse til at gemme tweets.  
 
-4. example_4_time_and_dates
-	Kort introduktion til hvordan man arbejder med unix time stamps, tidspunkter og datoer i processing (java)
+4. example_4_time_and_dates    
+	Kort introduktion til hvordan man arbejder med unix time stamps, tidspunkter og datoer i processing (java)  
 
-5. example_5_1
+5. example_5 wordcloud    
+	brug library til at lave skyer af ord, n-grams, find vigtige nøgleord.   
+	Øvelse sorter grupper af ord fra, fx. biord og hashtags.   
 
-6. Sammenlign
+6. example_5_1, 2, 3 trends over tid    
+	Simple sammenligninger over tid.   
+	Binning pr. dag.   
 
-7. Netværksdiagram
+7. Netværksdiagrammer
+	Tegn forbindelser mellem politikere baseret på hvordan de henviser til hinanden.    
+
+8. Ugerevy
+	Animerede tweets pr. parti pr. uge på skærmen. Med simpelt interaktivt interface.
+
+
 	
 
 

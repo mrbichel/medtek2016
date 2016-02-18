@@ -45,7 +45,9 @@ void searchWord(String _keyword) {
       String tweetString = db.getString("text").toLowerCase();
       
       tweetString = tweetString.replace('\n', ' ');
-      
+      tweetString = tweetString.replace("larsloekke", "larsloekke den lille svindler");
+      tweetString = tweetString.replace("løkke", "løkke den lille svindler");
+
       Tweet tweet = new Tweet();
       // split the tweet into words
       tweet.tweet = tweetString;
@@ -59,11 +61,11 @@ void searchWord(String _keyword) {
 
 void setup() {
   tweets = new ArrayList<Tweet>();
-  size( 1000, 600 );
+  size( 1600, 1000 );
   db = new SQLite( this, "../data/st.db" );
   
   if ( db.connect() ) {
-    searchWord("arbejde");
+    searchWord("stole ");
   } 
 }
 

@@ -1,7 +1,8 @@
 // Example 5 - User Poplularity Line Graph
 
 // Når vi skal se historierne i vores data er det ofte relevant at visualisere udvikling over tid
-// Her et simpelt eksempel hvor vi ...
+// Her et simpelt eksempel hvor vi ser over tid hvor mange gange en politiker bliver nævnt af andre 
+
 
 import de.bezier.data.sql.*;
 import java.text.SimpleDateFormat;
@@ -13,7 +14,7 @@ String user1 = "larsloekke";
 
 // sort by time
 // ASC|DESC stands for Ascending or Descending. Ascending is counting up, Descending is counting down.
-String queryUser1 = "SELECT time FROM st WHERE text LIKE '%" + user1 + "%' OR user='" + user1 + "' ORDER BY time ASC";
+String queryUser1 = "SELECT time FROM st WHERE text LIKE '%" + user1 + "%' ORDER BY time ASC";
 
 int screen_x = 800;
 int screen_y = 600;
@@ -65,6 +66,8 @@ void setup() {
   
 }
 
+// 
+
 void draw() {
   
   background(128);
@@ -81,10 +84,11 @@ void draw() {
   //init variables for the loop below, and to make things a bit more readable
   int user1_tweetCountCurrent = 0;  
   int user1_tweetCountTotal = user1_timestamps.length;
-  int user1_firstTime = user1_timestamps[0];  
+  int user1_firstTime = user1_timestamps[0];
+
   //get the last time stamp in the timestamps array
   int user1_lastTime = user1_timestamps[user1_timestamps.length - 1];
-  
+
   //for each time stamp in the timestamps array
   for (int i=0; i < user1_timestamps.length ; i++){
     //map the current timestamp
