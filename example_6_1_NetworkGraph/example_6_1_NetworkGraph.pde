@@ -4,10 +4,8 @@
 import de.bezier.data.sql.*;
 SQLite db;
 
-
 int screen_x = 700;
 int screen_y = 700;
-
 
 //Initial username to graph
 String userInit = "larsloekke";
@@ -18,7 +16,6 @@ String userInit = "larsloekke";
 // "user1@user2" -> 10      - user2 has retweeted user1 ten times
 // "user2@user1" -> 2       - user1 has retweeted user2 two times
 IntDict weightedEdges;
-
 
 import java.util.Map;
 // HashMap "network" is a HashMap of IntDict to store weighted directional relations.
@@ -33,10 +30,7 @@ import java.util.Map;
 HashMap<String,IntDict> network = new HashMap<String,IntDict>();
 
 
-
-
 //HashMap of IntDicts
-
 void createLocalGraph(String userCurrent){
   
   //clear each time for now, could be nice to continue to build a network in the background

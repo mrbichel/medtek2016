@@ -33,7 +33,6 @@ void drawAxis(){
   line(offset_x, offset_y + graph_y, offset_x + graph_x, offset_y + graph_y);    
 }
 
-
 class User {
 
   String name;

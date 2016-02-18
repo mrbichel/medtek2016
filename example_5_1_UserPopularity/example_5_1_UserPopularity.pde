@@ -3,18 +3,25 @@
 // Når vi skal se historierne i vores data er det ofte relevant at visualisere udvikling over tid
 // Her et simpelt eksempel hvor vi ser over tid hvor mange gange en politiker bliver nævnt af andre 
 
-
 import de.bezier.data.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 SQLite db;
 
 String user1 = "larsloekke";
 
+
+// dates in java is a mess - library called joda time if you need it
+// otherwise just stick to unix time stamps 
+int toTime = 1434628800; // valg 18 juni 15   
+int fromTime = toTime - (200*24*60*60); // to måneder før
+
 // sort by time
 // ASC|DESC stands for Ascending or Descending. Ascending is counting up, Descending is counting down.
 String queryUser1 = "SELECT time FROM st WHERE text LIKE '%" + user1 + "%' ORDER BY time ASC";
+
+// Specific time
+//String queryUser1 = "SELECT time FROM st WHERE text LIKE '%" + user1 + "%' and time >= " + fromTime + " and time <=  " + toTime + " ORDER BY time ASC";
+
 
 int screen_x = 800;
 int screen_y = 600;
@@ -62,11 +69,8 @@ void setup() {
       //Date date = new Date ((long) time * 1000);
       println("time:" + time);
     }
-  }
-  
+  } 
 }
-
-// 
 
 void draw() {
   
@@ -89,20 +93,27 @@ void draw() {
   //get the last time stamp in the timestamps array
   int user1_lastTime = user1_timestamps[user1_timestamps.length - 1];
 
+
+  int day = user1_timestamps[0];
+
   //for each time stamp in the timestamps array
   for (int i=0; i < user1_timestamps.length ; i++){
-    //map the current timestamp
-    int timeValue = user1_timestamps[i];
+
+     //map the current timestamp
+     int timeValue = user1_timestamps[i];
+
+      user1_tweetCountCurrent++;
+      // uncomment to make day based
+      /*if(timeValue - day > (24*60*60)) {
+          user1_tweetCountCurrent = 0;
+          day = timeValue;
+      }*/
     
-    //float vertex_x = map(timeValue, user1_firstTime, user1_lastTime, 0, width);
     float vertex_x = map(timeValue, user1_firstTime, user1_lastTime, offset_x, offset_x + graph_x);
-    //float vertex_y = map(user1_tweetCountCurrent, 0, user1_tweetCountTotal, height, 0);
     float vertex_y = map(user1_tweetCountCurrent, 0, user1_tweetCountTotal, offset_y + graph_y , offset_y);
     vertex(vertex_x, vertex_y);
-    user1_tweetCountCurrent++;
   } 
   
   endShape();
   
- 
 }

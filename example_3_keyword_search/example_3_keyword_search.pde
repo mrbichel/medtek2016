@@ -103,8 +103,7 @@ void draw() {
           selectedWord = w;
           fill(255,0,0);
           text(w, xOffset, yOffset);
-      } 
-      //xOffset += wordWidth;
+      }         
     }
     
     yOffset += lineHeight;
@@ -118,4 +117,5 @@ void mousePressed() {
 }
 
 // Øvelser
-// 1. Ændre programmet så det søger på en kombination af flere ord
+// 1.  
+// 2. Ændre programmet så det søger på en kombination af flere ord

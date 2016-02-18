@@ -122,7 +122,7 @@ class User {
         tweetCountTotal++;      
         println("time:" + time);
       }
-    }else{ // db connection fail
+    } else { // db connection fail
       println("DB connection fail");
       exit(); //quit the program.
     }
